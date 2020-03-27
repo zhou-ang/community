@@ -1,6 +1,7 @@
 package zhoukang.community.model;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 
@@ -8,6 +9,7 @@ import java.io.Serializable;
  * user
  * @author 
  */
+@Alias("user")
 public class User implements Serializable {
     private Integer id;
 

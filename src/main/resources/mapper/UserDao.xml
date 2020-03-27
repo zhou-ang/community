@@ -12,6 +12,12 @@
   <sql id="Base_Column_List">
     id, account_id, `name`, token, gmt_create, gmt_modify
   </sql>
+  <select id="selectByToken" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from test.user
+    where token=#{token}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

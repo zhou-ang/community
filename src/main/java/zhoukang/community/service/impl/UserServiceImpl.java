@@ -8,9 +8,14 @@ import zhoukang.community.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserDao userDao=null;
+    private UserDao userDao;
     @Override
     public int insert(User user) {
         return userDao.insert(user);
+    }
+
+    @Override
+    public User findByToken(String token) {
+        return userDao.selectByToken(token);
     }
 }

@@ -12,7 +12,9 @@ import zhoukang.community.model.User;
 import zhoukang.community.provider.GithubProvider;
 import zhoukang.community.service.UserService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
@@ -33,7 +35,8 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
-                           HttpServletRequest request) {
+                           HttpServletRequest request,
+                           HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
@@ -43,17 +46,18 @@ public class AuthorizeController {
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubuser = githubProvider.getUser(accessToken);
         if (githubuser != null) {
-            User user=new User();
-            user.setToken(UUID.randomUUID().toString());
+            User user = new User();
+            String token = UUID.randomUUID().toString();
+            user.setToken(token);
             user.setName(githubuser.getName());
             user.setAccount_id(String.valueOf(githubuser.getId()));
             user.setGmt_create(System.currentTimeMillis());
             user.setGmt_modify(user.getGmt_create());
             userService.insert(user);
-            //登录成功
-            request.getSession().setAttribute("user", githubuser);
+            
+            response.addCookie(new Cookie("token",token));
             return "redirect:/";
-        }else{
+        } else {
             //登录失败
             return "redirect:/";
         }
