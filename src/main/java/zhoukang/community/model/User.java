@@ -1,15 +1,11 @@
 package zhoukang.community.model;
 
-import lombok.Data;
-import org.apache.ibatis.type.Alias;
-
 import java.io.Serializable;
 
 /**
  * user
  * @author 
  */
-@Alias("user")
 public class User implements Serializable {
     private Integer id;
 
@@ -22,6 +18,8 @@ public class User implements Serializable {
     private Long gmt_create;
 
     private Long gmt_modify;
+
+    private String avatar_url;
 
     private static final long serialVersionUID = 1L;
 
@@ -71,5 +69,13 @@ public class User implements Serializable {
 
     public void setGmt_modify(Long gmt_modify) {
         this.gmt_modify = gmt_modify;
+    }
+
+    public String getAvatar_url() {
+        return avatar_url;
+    }
+
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
     }
 }

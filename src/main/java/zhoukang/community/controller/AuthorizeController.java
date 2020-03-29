@@ -1,6 +1,5 @@
 package zhoukang.community.controller;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -45,17 +44,18 @@ public class AuthorizeController {
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubuser = githubProvider.getUser(accessToken);
-        if (githubuser != null) {
+        if (githubuser != null && githubuser.getId() != null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             user.setName(githubuser.getName());
             user.setAccount_id(String.valueOf(githubuser.getId()));
+            user.setAvatar_url(githubuser.getAvatar_url());
             user.setGmt_create(System.currentTimeMillis());
             user.setGmt_modify(user.getGmt_create());
             userService.insert(user);
-            
-            response.addCookie(new Cookie("token",token));
+
+            response.addCookie(new Cookie("token", token));
             return "redirect:/";
         } else {
             //登录失败

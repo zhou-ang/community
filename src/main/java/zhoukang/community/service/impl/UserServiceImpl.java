@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByToken(String token) {
+    public User selectByToken(String token) {
         return userDao.selectByToken(token);
     }
 }

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zhoukang.community.mapper.QuestionDao">
+  <resultMap id="BaseResultMap" type="zhoukang.community.model.Question">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="gmt_create" jdbcType="BIGINT" property="gmt_create" />
+    <result column="gmt_modified" jdbcType="BIGINT" property="gmt_modified" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="comment_count" jdbcType="INTEGER" property="comment_count" />
+    <result column="view_count" jdbcType="INTEGER" property="view_count" />
+    <result column="like_count" jdbcType="INTEGER" property="like_count" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="zhoukang.community.model.Question">
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, gmt_create, gmt_modified, creator, comment_count, view_count, like_count, 
+    tags
+  </sql>
+  <sql id="Blob_Column_List">
+    description
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="zhoukang.community.model.Question" useGeneratedKeys="true">
+    insert into question (title, gmt_create, gmt_modified, 
+      creator, comment_count, view_count, 
+      like_count, tags, description
+      )
+    values (#{title,jdbcType=VARCHAR}, #{gmt_create,jdbcType=BIGINT}, #{gmt_modified,jdbcType=BIGINT}, 
+      #{creator,jdbcType=INTEGER}, #{comment_count,jdbcType=INTEGER}, #{view_count,jdbcType=INTEGER}, 
+      #{like_count,jdbcType=INTEGER}, #{tags,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="zhoukang.community.model.Question" useGeneratedKeys="true">
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="gmt_create != null">
+        gmt_create,
+      </if>
+      <if test="gmt_modified != null">
+        gmt_modified,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="comment_count != null">
+        comment_count,
+      </if>
+      <if test="view_count != null">
+        view_count,
+      </if>
+      <if test="like_count != null">
+        like_count,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="gmt_create != null">
+        #{gmt_create,jdbcType=BIGINT},
+      </if>
+      <if test="gmt_modified != null">
+        #{gmt_modified,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="comment_count != null">
+        #{comment_count,jdbcType=INTEGER},
+      </if>
+      <if test="view_count != null">
+        #{view_count,jdbcType=INTEGER},
+      </if>
+      <if test="like_count != null">
+        #{like_count,jdbcType=INTEGER},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zhoukang.community.model.Question">
+    update question
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="gmt_create != null">
+        gmt_create = #{gmt_create,jdbcType=BIGINT},
+      </if>
+      <if test="gmt_modified != null">
+        gmt_modified = #{gmt_modified,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="comment_count != null">
+        comment_count = #{comment_count,jdbcType=INTEGER},
+      </if>
+      <if test="view_count != null">
+        view_count = #{view_count,jdbcType=INTEGER},
+      </if>
+      <if test="like_count != null">
+        like_count = #{like_count,jdbcType=INTEGER},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="zhoukang.community.model.Question">
+    update question
+    set title = #{title,jdbcType=VARCHAR},
+      gmt_create = #{gmt_create,jdbcType=BIGINT},
+      gmt_modified = #{gmt_modified,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=INTEGER},
+      comment_count = #{comment_count,jdbcType=INTEGER},
+      view_count = #{view_count,jdbcType=INTEGER},
+      like_count = #{like_count,jdbcType=INTEGER},
+      tags = #{tags,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zhoukang.community.model.Question">
+    update question
+    set title = #{title,jdbcType=VARCHAR},
+      gmt_create = #{gmt_create,jdbcType=BIGINT},
+      gmt_modified = #{gmt_modified,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=INTEGER},
+      comment_count = #{comment_count,jdbcType=INTEGER},
+      view_count = #{view_count,jdbcType=INTEGER},
+      like_count = #{like_count,jdbcType=INTEGER},
+      tags = #{tags,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

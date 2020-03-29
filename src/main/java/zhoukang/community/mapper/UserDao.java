@@ -13,9 +13,10 @@ public interface UserDao {
 
     User selectByPrimaryKey(Integer id);
 
-    User selectByToken(String token);
-
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User selectByToken(String token);
+
 }
