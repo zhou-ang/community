@@ -30,6 +30,9 @@
     from question
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectList" resultMap="ResultMapWithBLOBs">
+    select * from question
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from question
     where id = #{id,jdbcType=INTEGER}
