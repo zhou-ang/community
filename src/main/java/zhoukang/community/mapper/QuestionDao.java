@@ -22,4 +22,6 @@ public interface QuestionDao {
     int updateByPrimaryKey(Question record);
 
     List<Question> selectList();
+
+    Integer count();
 }

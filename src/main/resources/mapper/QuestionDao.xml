@@ -22,6 +22,9 @@
   <sql id="Blob_Column_List">
     description
   </sql>
+  <select id="count" resultType="java.lang.Integer">
+    select count(1) from question
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

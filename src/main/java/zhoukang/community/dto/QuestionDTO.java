@@ -3,6 +3,8 @@ package zhoukang.community.dto;
 import lombok.Data;
 import zhoukang.community.model.User;
 
+import java.util.List;
+
 /**
  * Created by codedrinker on 2019/5/7.
  */
@@ -29,4 +31,6 @@ public class QuestionDTO {
     private String description;;
 
     private User user;
+
+    private List<Integer> pages;
 }
