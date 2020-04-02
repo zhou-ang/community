@@ -19,6 +19,17 @@
         from user
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <!--自己写的-->
+    <update id="updateByAccountID" parameterType="zhoukang.community.model.User">
+        update user
+    set account_id = #{account_id,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      token = #{token,jdbcType=CHAR},
+      gmt_create = #{gmt_create,jdbcType=BIGINT},
+      gmt_modify = #{gmt_modify,jdbcType=BIGINT},
+      avatar_url = #{avatar_url,jdbcType=VARCHAR}
+    where account_id = #{account_id}
+    </update>
     <select id="selectByAccountID" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -31,6 +42,7 @@
         from user
         where token = #{token}
     </select>
+    <!--    上面自己写的-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}

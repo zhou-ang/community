@@ -32,7 +32,12 @@ public class UserServiceImpl implements UserService {
         user.setAvatar_url(githubuser.getAvatar_url());
         user.setGmt_create(System.currentTimeMillis());
         user.setGmt_modify(user.getGmt_create());
-        userDao.insert(user);
+        if(userDao.selectByAccountID(String.valueOf(githubuser.getId()))==null){
+            userDao.insert(user);
+        }else{
+            userDao.updateByAccountID(user);
+        }
+
         return token;
     }
 }

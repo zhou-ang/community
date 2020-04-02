@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import zhoukang.community.model.Question;
 import zhoukang.community.model.User;
 import zhoukang.community.service.QuestionService;
-import zhoukang.community.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,8 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 public class publishController {
     @Autowired
     private QuestionService questionService;
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/publish")
     public String publish() {

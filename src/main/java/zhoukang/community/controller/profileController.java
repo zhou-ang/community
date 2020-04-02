@@ -10,16 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import zhoukang.community.dto.PaginationDTO;
 import zhoukang.community.model.User;
 import zhoukang.community.service.QuestionService;
-import zhoukang.community.service.UserService;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class profileController {
-    @Autowired
-    private UserService userService;
-
     @Autowired
     private QuestionService questionService;
 
@@ -29,20 +23,7 @@ public class profileController {
                           @RequestParam(name="size",defaultValue = "5") Integer size,
                           Model model,
                           HttpServletRequest request) {
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    String token = cookie.getValue();
-                    user = userService.selectByToken(token);
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
         if(user==null){
             return "redirect:/";
         }
