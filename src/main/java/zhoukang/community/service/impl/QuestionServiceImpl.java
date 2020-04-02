@@ -34,7 +34,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question : questionList) {
-            User user = userDao.selectByPrimaryKey(question.getCreator());
+            User user = userDao.selectByAccountID(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
@@ -44,6 +44,22 @@ public class QuestionServiceImpl implements QuestionService {
         paginationDTO.setQuestions(questionDTOS);
         Integer totalCount = questionDao.count();
         paginationDTO.setPagination(totalCount,currentPage,size);
+        return paginationDTO;
+    }
+
+    @Override
+    public PaginationDTO listByAccount(String account_id) {
+        List<Question> questionList = questionDao.selectByCreator(account_id);
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+        for (Question question : questionList) {
+            User user = userDao.selectByAccountID(question.getCreator());
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question, questionDTO);
+            questionDTO.setUser(user);
+            questionDTOS.add(questionDTO);
+        }
+        PaginationDTO paginationDTO = new PaginationDTO();
+        paginationDTO.setQuestions(questionDTOS);
         return paginationDTO;
     }
 }

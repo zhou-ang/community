@@ -19,4 +19,5 @@ public interface UserDao {
 
     User selectByToken(String token);
 
+    User selectByAccountID(String account_id);
 }

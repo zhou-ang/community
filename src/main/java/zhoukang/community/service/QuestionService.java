@@ -7,4 +7,6 @@ public interface QuestionService {
     int insert(Question question);
 
     PaginationDTO list(Integer page, Integer size);
+
+    PaginationDTO listByAccount(String account_id);
 }

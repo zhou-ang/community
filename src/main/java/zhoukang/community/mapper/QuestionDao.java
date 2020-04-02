@@ -21,6 +21,8 @@ public interface QuestionDao {
 
     int updateByPrimaryKey(Question record);
 
+    List<Question> selectByCreator(String creator);
+
     List<Question> selectList();
 
     Integer count();

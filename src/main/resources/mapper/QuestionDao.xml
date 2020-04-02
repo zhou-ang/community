@@ -6,7 +6,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="gmt_create" jdbcType="BIGINT" property="gmt_create" />
     <result column="gmt_modified" jdbcType="BIGINT" property="gmt_modified" />
-    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="comment_count" jdbcType="INTEGER" property="comment_count" />
     <result column="view_count" jdbcType="INTEGER" property="view_count" />
     <result column="like_count" jdbcType="INTEGER" property="like_count" />
@@ -22,6 +22,14 @@
   <sql id="Blob_Column_List">
     description
   </sql>
+  <select id="selectByCreator" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+  select
+  <include refid="Base_Column_List" />
+  ,
+  <include refid="Blob_Column_List" />
+  from question where
+  creator = #{creator}
+</select>
   <select id="count" resultType="java.lang.Integer">
     select count(1) from question
   </select>
@@ -46,7 +54,7 @@
       like_count, tags, description
       )
     values (#{title,jdbcType=VARCHAR}, #{gmt_create,jdbcType=BIGINT}, #{gmt_modified,jdbcType=BIGINT}, 
-      #{creator,jdbcType=INTEGER}, #{comment_count,jdbcType=INTEGER}, #{view_count,jdbcType=INTEGER}, 
+      #{creator,jdbcType=VARCHAR}, #{comment_count,jdbcType=INTEGER}, #{view_count,jdbcType=INTEGER},
       #{like_count,jdbcType=INTEGER}, #{tags,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -92,7 +100,7 @@
         #{gmt_modified,jdbcType=BIGINT},
       </if>
       <if test="creator != null">
-        #{creator,jdbcType=INTEGER},
+        #{creator,jdbcType=VARCHAR},
       </if>
       <if test="comment_count != null">
         #{comment_count,jdbcType=INTEGER},
@@ -124,7 +132,7 @@
         gmt_modified = #{gmt_modified,jdbcType=BIGINT},
       </if>
       <if test="creator != null">
-        creator = #{creator,jdbcType=INTEGER},
+        creator = #{creator,jdbcType=VARCHAR},
       </if>
       <if test="comment_count != null">
         comment_count = #{comment_count,jdbcType=INTEGER},
@@ -149,7 +157,7 @@
     set title = #{title,jdbcType=VARCHAR},
       gmt_create = #{gmt_create,jdbcType=BIGINT},
       gmt_modified = #{gmt_modified,jdbcType=BIGINT},
-      creator = #{creator,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
       comment_count = #{comment_count,jdbcType=INTEGER},
       view_count = #{view_count,jdbcType=INTEGER},
       like_count = #{like_count,jdbcType=INTEGER},
@@ -162,7 +170,7 @@
     set title = #{title,jdbcType=VARCHAR},
       gmt_create = #{gmt_create,jdbcType=BIGINT},
       gmt_modified = #{gmt_modified,jdbcType=BIGINT},
-      creator = #{creator,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
       comment_count = #{comment_count,jdbcType=INTEGER},
       view_count = #{view_count,jdbcType=INTEGER},
       like_count = #{like_count,jdbcType=INTEGER},

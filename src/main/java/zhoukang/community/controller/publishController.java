@@ -60,7 +60,7 @@ public class publishController {
         question.setTitle(title);
         question.setDescription(description);
         question.setTags(tag);
-        question.setCreator(user.getId());
+        question.setCreator(user.getAccount_id());
         question.setGmt_create(System.currentTimeMillis());
         question.setGmt_modified(question.getGmt_create());
         questionService.insert(question);
